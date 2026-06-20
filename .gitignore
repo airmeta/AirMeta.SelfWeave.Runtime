@@ -427,3 +427,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# SelfWeave internal migration planning
+迁移计划.md

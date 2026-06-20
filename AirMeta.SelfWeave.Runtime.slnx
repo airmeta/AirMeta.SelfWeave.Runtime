@@ -1,0 +1,8 @@
+﻿<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AirMeta.SelfWeave.Runtime/AirMeta.SelfWeave.Runtime.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AirMeta.SelfWeave.Runtime.Tests/AirMeta.SelfWeave.Runtime.Tests.csproj" />
+  </Folder>
+</Solution>
