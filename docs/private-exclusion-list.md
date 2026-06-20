@@ -9,8 +9,7 @@ Excluded content:
 - Data access code.
 - Engine internal computation code.
 - Private parameters.
-- Private weights.
-- Private thresholds.
+- Private tuning data.
 - Private ranking rules.
 - Internal test vectors.
 - Private samples.

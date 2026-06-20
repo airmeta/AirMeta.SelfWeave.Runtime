@@ -2,13 +2,13 @@
 
 [English](README.md)
 
-`AirMeta.SelfWeave.Runtime` 是 SelfWeave 引擎集成的公开运行时契约边界。开放运行时宿主、商业版/闭源认知引擎，以及后续 Community Engine，都应通过这个包对齐 Snapshot、Decision、Proposal、版本协商、治理标记、Trace 披露和插件握手协议。
+`AirMeta.SelfWeave.Runtime` 是 SelfWeave 引擎集成的公开运行时契约边界。它只定义 Runtime host 与引擎实现之间交换不可变输入、受控输出、版本元数据、治理要求、可安全审计记录和插件握手所需的最小公开契约面。
 
 ## 本仓库包含什么
 
 - `src/AirMeta.SelfWeave.Runtime/Contracts` 下的公开 .NET Runtime 契约。
-- `IProjectionDecisionEngine`、`IWaveDynamicsEngine`、`ILearningPlasticityEngine`、`ICognitiveBiasEngine` 等引擎抽象接口。
-- Snapshot、Decision、Proposal、Capability、Compatibility、Governance、Trace、Versioning、Plugin 等 DTO。
+- 按运行时职责分组的引擎抽象接口和契约 DTO。
+- Snapshot、Decision、Proposal、Capability、Compatibility、Governance、Trace、Versioning、Plugin 等契约类型。
 - `RuntimeContractGuard` 等运行时校验工具，用于序列化、依赖边界、输出校验、Trace 校验和插件握手校验。
 - MSTest 测试，覆盖保守治理默认值、契约兼容性、JSON 往返和禁止依赖。
 - `docs/` 下的运行时边界说明文档。
@@ -19,7 +19,7 @@
 - 业务载体流程代码。
 - 数据访问代码。
 - 引擎内部计算实现。
-- 私有参数、权重、阈值、排序规则、样本、Trace、密钥或私有包源。
+- 私有参数、调优数据、排序规则、样本、Trace、密钥或私有包源。
 
 Runtime 是治理归属方。引擎可以返回决策和建议，但不能绕过治理、人工确认、promote guard、审计结果、权限决策或运行时生命周期规则。
 
@@ -67,15 +67,9 @@ dotnet test AirMeta.SelfWeave.Runtime.slnx --no-restore
 
 ## 核心契约
 
-当前初始契约覆盖：
+本包公开 Runtime 到引擎的抽象接口、不可变输入 DTO、受控输出 DTO、能力元数据、治理标记、可安全审计 DTO 和插件握手类型。准确 API 以源码和生成的 XML 文档为准。
 
-- 投影决策：`IProjectionDecisionEngine`。
-- Wave 传播决策：`IWaveDynamicsEngine`。
-- 学习可塑性建议：`ILearningPlasticityEngine`。
-- 运行时偏置决策：`ICognitiveBiasEngine`。
-- 后续扩展点：共振发现、抽象归纳、梦境模拟和预测规划。
-
-引擎只接收不可变 Snapshot DTO，并返回 Decision 或 Proposal。Runtime host 继续负责校验、裁剪、provenance 检查、持久化、Trace 写入、人工确认和 promote guard。
+引擎只接收不可变 Snapshot DTO，并返回 Decision 或 Proposal。Runtime host 继续负责校验、裁剪、provenance 检查、持久化、Trace 写入、人工确认和受控状态变更。
 
 ## 契约默认值
 
@@ -83,20 +77,19 @@ dotnet test AirMeta.SelfWeave.Runtime.slnx --no-restore
 
 - `RequiresGovernanceReview = true`
 - `TraceRequired = true`
-- `PromotesStableNeuron = false`
-- `PromotesStableSynapse = false`
+- `AffectsStableState = false`
 
-stable neuron 或 stable synapse 的提升必须经过 Runtime governance 和 promote guard 校验。引擎输出不能声称某个决策已经执行、已经持久化，或可以豁免治理。
+稳定状态变更必须经过 Runtime governance 和 guard 校验。引擎输出不能声称某个决策已经执行、已经持久化，或可以豁免治理。
 
-## 商业版引擎边界
+## 引擎边界
 
-商业版或闭源认知引擎可以实现这些契约，但必须由 Runtime host 进行加载，并完成能力协商、兼容性检查、插件身份校验、超时控制和降级处理。
+引擎实现可以使用这些契约，但必须由 Runtime host 进行加载，并完成能力协商、兼容性检查、插件身份校验、超时控制和降级处理。
 
-闭源引擎不能接收或持有：
+引擎不能接收或持有：
 
 - `DbContext`、Repository、Domain 或 ServiceProvider 引用。
 - HTTP Context 或后台任务服务。
-- stable topology 写入服务。
+- 稳定状态写入服务。
 - 权限、审计、人工确认或 promote guard 的所有权。
 
 本 Runtime 包只定义契约面，不发布私有算法实现。

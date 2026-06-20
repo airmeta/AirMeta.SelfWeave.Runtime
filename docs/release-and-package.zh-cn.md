@@ -77,7 +77,7 @@ dotnet pack src/AirMeta.SelfWeave.Runtime/AirMeta.SelfWeave.Runtime.csproj -c Re
 - `Contracts` 目录按职责分层，并保持一个公开类型一个文件。
 - 公开类型、方法、属性和 record 参数具有中英文 XML 注释。
 - 没有引入 Air.Cloud、数据库、Repository、Domain、Service 或 Entry 依赖。
-- 没有包含私有参数、权重、阈值、样本、trace、密钥或连接串。
+- 没有包含私有参数、调优数据、样本、trace、密钥或连接串。
 - `RuntimeContractVersions` 已反映本次契约兼容性变化。
 
 ## 版本升级规则

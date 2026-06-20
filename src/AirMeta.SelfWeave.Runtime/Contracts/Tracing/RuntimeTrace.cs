@@ -8,8 +8,7 @@
 /// <param name="Identity">生成输出的引擎和契约身份；The engine and contract identity that produced the output.</param>
 /// <param name="InputSnapshotHash">输入快照哈希；The hash of the input snapshot.</param>
 /// <param name="DecisionId">关联决策标识；The related decision identifier.</param>
-/// <param name="ReasonCodes">输出原因码集合；Output reason codes.</param>
-/// <param name="Confidence">输出置信度；The output confidence score.</param>
+/// <param name="AuditRefs">审计引用集合；The audit references.</param>
 /// <param name="GovernanceFlags">治理控制标记；Governance control flags.</param>
 /// <param name="GovernanceResult">治理处理结果；The governance processing result.</param>
 /// <param name="FallbackUsed">是否使用降级路径；Whether fallback was used.</param>
@@ -20,8 +19,7 @@ public sealed record RuntimeTrace(
     RuntimeContractIdentity Identity,
     string InputSnapshotHash,
     string DecisionId,
-    IReadOnlyList<string> ReasonCodes,
-    decimal Confidence,
+    IReadOnlyList<string> AuditRefs,
     RuntimeGovernanceFlags GovernanceFlags,
     GovernanceResult GovernanceResult,
     bool FallbackUsed,

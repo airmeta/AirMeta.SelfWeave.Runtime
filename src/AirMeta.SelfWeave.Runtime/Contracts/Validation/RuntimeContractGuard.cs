@@ -72,7 +72,7 @@ public static class RuntimeContractGuard
     }
 
     /// <summary>
-    /// 校验引擎建议是否满足治理和提升保护边界；Validates whether an engine proposal satisfies governance and promote-guard boundaries.
+    /// 校验引擎建议是否满足治理和状态保护边界；Validates whether an engine proposal satisfies governance and state-guard boundaries.
     /// </summary>
     /// <param name="proposal">待校验的引擎建议；The engine proposal to validate.</param>
     /// <returns>违规原因码集合；The validation violation reason codes.</returns>
@@ -80,11 +80,11 @@ public static class RuntimeContractGuard
     {
         var violations = ValidateEngineOutput(proposal).ToList();
 
-        if (proposal.GovernanceFlags.PromotesStableNeuron || proposal.GovernanceFlags.PromotesStableSynapse)
+        if (proposal.GovernanceFlags.AffectsStableState)
         {
-            if (!proposal.GovernanceFlags.RequiresGovernanceReview || !proposal.GovernanceFlags.RequiresPromoteGuard)
+            if (!proposal.GovernanceFlags.RequiresGovernanceReview || !proposal.GovernanceFlags.RequiresStateGuard)
             {
-                violations.Add("stable_promotion_requires_governance_and_promote_guard");
+                violations.Add("stable_state_requires_governance_and_state_guard");
             }
         }
 

@@ -5,9 +5,8 @@
 /// </summary>
 /// <param name="RequiresGovernanceReview">是否需要治理审核；Whether governance review is required.</param>
 /// <param name="RequiresManualConfirmation">是否需要人工确认；Whether manual confirmation is required.</param>
-/// <param name="RequiresPromoteGuard">是否需要提升保护校验；Whether promote-guard validation is required.</param>
-/// <param name="PromotesStableNeuron">是否尝试提升稳定神经元；Whether the output attempts to promote a stable neuron.</param>
-/// <param name="PromotesStableSynapse">是否尝试提升稳定突触；Whether the output attempts to promote a stable synapse.</param>
+/// <param name="RequiresStateGuard">是否需要状态保护校验；Whether state-guard validation is required.</param>
+/// <param name="AffectsStableState">是否影响稳定状态；Whether stable state may be affected.</param>
 /// <param name="AffectsLongTermState">是否影响长期状态；Whether long-term state may be affected.</param>
 /// <param name="AffectsHighRiskAction">是否影响高风险动作；Whether high-risk actions may be affected.</param>
 /// <param name="TraceRequired">是否必须记录追踪；Whether trace recording is required.</param>
@@ -15,9 +14,8 @@
 public sealed record RuntimeGovernanceFlags(
     bool RequiresGovernanceReview = true,
     bool RequiresManualConfirmation = false,
-    bool RequiresPromoteGuard = false,
-    bool PromotesStableNeuron = false,
-    bool PromotesStableSynapse = false,
+    bool RequiresStateGuard = false,
+    bool AffectsStableState = false,
     bool AffectsLongTermState = false,
     bool AffectsHighRiskAction = false,
     bool TraceRequired = true,

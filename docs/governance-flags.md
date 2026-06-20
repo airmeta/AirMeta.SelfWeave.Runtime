@@ -21,13 +21,13 @@ Default rules:
 - `promotes_stable_neuron = false`
 - `promotes_stable_synapse = false`
 
-Stable graph promotion requires:
+Stable-state changes require:
 
 - Runtime governance review.
-- Promote guard validation.
+- Guard validation.
 - Public Trace generation.
 - Actual Engine identity in Trace.
 
-Engine output may propose stable promotion only as a proposal. It must not claim that a stable neuron, stable synapse, audit result, permission decision, or lifecycle transition has already been applied.
+Engine output may propose stable-state changes only as proposals. It must not claim that a stable-state change, audit result, permission decision, or lifecycle transition has already been applied.
 
-Manual confirmation is required when a proposal affects long-term state, high-risk actions, stable graph promotion, or any Runtime policy marked as human-reviewable by a carrier.
+Manual confirmation is required when a proposal affects long-term state, high-risk actions, stable-state changes, or any Runtime policy marked as human-reviewable by a carrier.

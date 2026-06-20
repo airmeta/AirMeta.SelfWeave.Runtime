@@ -35,7 +35,7 @@ Input:
 
 - Runtime-owned context summaries.
 - Runtime-owned provenance.
-- Public references to state, topology, evidence, and bias inputs.
+- Public references and summaries required by the runtime contract.
 
 Output:
 
@@ -58,10 +58,9 @@ Input:
 
 Output:
 
-- Reason codes.
-- Confidence.
+- Policy-approved explanation metadata.
 - Governance flags.
-- Suggested node, relation, wave, bias, synapse, or learning changes.
+- Bounded candidate outputs.
 
 Forbidden:
 
@@ -82,7 +81,7 @@ Input:
 Output:
 
 - Governance result.
-- Promote guard outcome.
+- Guard outcome.
 - Fallback decision.
 
 Forbidden:
@@ -99,7 +98,7 @@ Input:
 - Engine identity.
 - Snapshot hash.
 - Decision or proposal identity.
-- Reason codes.
+- Policy-approved explanation metadata.
 - Governance result.
 
 Output:
@@ -133,28 +132,13 @@ Forbidden:
 - Mutating stable Runtime state.
 - Bypassing timeout, fallback, manual confirmation, or promote guard rules.
 
-Engine capability declarations must include:
+Engine capability declarations must include public metadata for:
 
-- `engine_id`
-- `engine_name`
-- `engine_version`
-- `contract_version`
-- `supported_contracts`
-- `supported_snapshot_versions`
-- `supported_decision_versions`
-- `max_execution_time`
-- `fallback_required`
-- `determinism_level`
-- `trace_disclosure_level`
+- identity
+- versions
+- supported contract groups
+- execution boundaries
+- fallback behavior
+- disclosure level
 
-Runtime compatibility checks produce one of:
-
-- `compatible`
-- `incompatible_contract`
-- `unsupported_snapshot`
-- `unsupported_decision`
-- `timeout_required`
-- `fallback_required`
-- `trace_limited`
-
-The compatibility result controls whether the Runtime may call the Engine, must use fallback, or must reject the Engine for the current cycle.
+Runtime compatibility checks control whether the Runtime may call the Engine, must use fallback, must limit disclosure, or must reject the Engine for the current cycle.

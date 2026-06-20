@@ -1,4 +1,4 @@
-﻿using AirMeta.SelfWeave.Runtime.Contracts;
+using AirMeta.SelfWeave.Runtime.Contracts;
 using System.Text.Json;
 
 namespace AirMeta.SelfWeave.Runtime.Tests;
@@ -9,42 +9,38 @@ public sealed class RuntimeContractGuardTests
     [TestMethod]
     public void DecisionDefaultsRequireGovernanceAndTrace()
     {
-        var decision = new ProjectionDecision(
+        var decision = new RuntimeDecision(
             RuntimeContractIdentity.Unspecified,
             "decision-1",
             "hash-1",
-            ["reason"],
-            0.80m,
+            ["explanation-ref-1"],
             new RuntimeGovernanceFlags(),
-            ["node-1"],
-            ["relation-1"]);
+            ["output-ref-1"],
+            new Dictionary<string, string> { ["scope"] = "public" });
 
         var violations = RuntimeContractGuard.ValidateDecision(decision);
 
         Assert.IsEmpty(violations);
         Assert.IsTrue(decision.GovernanceFlags.RequiresGovernanceReview);
         Assert.IsTrue(decision.GovernanceFlags.TraceRequired);
-        Assert.IsFalse(decision.GovernanceFlags.PromotesStableNeuron);
-        Assert.IsFalse(decision.GovernanceFlags.PromotesStableSynapse);
+        Assert.IsFalse(decision.GovernanceFlags.AffectsStableState);
     }
 
     [TestMethod]
-    public void StablePromotionProposalRequiresPromoteGuard()
+    public void StableStateProposalRequiresStateGuard()
     {
-        var proposal = new SynapseAdjustmentProposal(
+        var proposal = new RuntimeProposal(
             RuntimeContractIdentity.Unspecified,
             "proposal-1",
             "hash-1",
-            ["coactivation"],
-            0.71m,
-            new RuntimeGovernanceFlags(PromotesStableSynapse: true),
-            "source-node",
-            "target-node",
-            0.10m);
+            ["explanation-ref-1"],
+            new RuntimeGovernanceFlags(AffectsStableState: true),
+            ["proposal-ref-1"],
+            new Dictionary<string, string> { ["scope"] = "public" });
 
         var violations = RuntimeContractGuard.ValidateProposal(proposal);
 
-        CollectionAssert.Contains(violations.ToList(), "stable_promotion_requires_governance_and_promote_guard");
+        CollectionAssert.Contains(violations.ToList(), "stable_state_requires_governance_and_state_guard");
     }
 
     [TestMethod]
@@ -54,7 +50,7 @@ public sealed class RuntimeContractGuardTests
 
         var result = RuntimeCompatibility.Evaluate(
             capability,
-            RuntimeContractKind.ProjectionDecision,
+            RuntimeContractKind.RuntimeDecision,
             RuntimeContractVersions.Initial,
             RuntimeContractVersions.Initial,
             TimeSpan.FromSeconds(5));
@@ -66,14 +62,14 @@ public sealed class RuntimeContractGuardTests
     [TestMethod]
     public void DecisionSerializationDoesNotExposeExecutionState()
     {
-        var decision = new RuntimeBiasDecision(
+        var decision = new RuntimeDecision(
             RuntimeContractIdentity.Unspecified,
             "decision-1",
             "hash-1",
-            ["bias_signal"],
-            0.60m,
+            ["explanation-ref-1"],
             new RuntimeGovernanceFlags(),
-            new Dictionary<string, decimal> { ["fatigue"] = 0.1m });
+            ["output-ref-1"],
+            new Dictionary<string, string> { ["scope"] = "public" });
 
         var json = RuntimeContractGuard.SerializeContract(decision);
 
@@ -89,9 +85,9 @@ public sealed class RuntimeContractGuardTests
         var capability = CreateCapability();
         var manifest = new EnginePluginManifest(
             "plugin-1",
-            "Projection Plugin",
+            "Runtime Plugin",
             "1.0.0",
-            "ProjectionPlugin.Create",
+            "RuntimePlugin.Create",
             PluginIsolationLevel.OutOfProcessAdapter,
             TimeSpan.FromSeconds(3),
             capability);
@@ -137,24 +133,22 @@ public sealed class RuntimeContractGuardTests
     [TestMethod]
     public void PublicContractsRoundTripThroughJson()
     {
-        var snapshot = new CognitiveContextSnapshot(
+        var snapshot = new RuntimeContextSnapshot(
             "snapshot-1",
             RuntimeContractVersions.Initial,
             "hash-1",
             "runtime",
             DateTimeOffset.UnixEpoch,
-            "cycle-1",
-            "interaction-1",
-            ["memory-1"],
-            ["goal-1"],
-            new Dictionary<string, decimal> { ["attention"] = 0.75m });
+            "context-1",
+            ["ref-1"],
+            new Dictionary<string, string> { ["scope"] = "public" });
 
         var json = RuntimeContractGuard.SerializeContract(snapshot);
-        var roundTripped = RuntimeContractGuard.DeserializeContract<CognitiveContextSnapshot>(json);
+        var roundTripped = RuntimeContractGuard.DeserializeContract<RuntimeContextSnapshot>(json);
 
         Assert.IsNotNull(roundTripped);
         Assert.AreEqual(snapshot.SnapshotHash, roundTripped.SnapshotHash);
-        Assert.AreEqual(snapshot.StateFactors["attention"], roundTripped.StateFactors["attention"]);
+        Assert.AreEqual(snapshot.Metadata["scope"], roundTripped.Metadata["scope"]);
         using var document = JsonDocument.Parse(json);
         Assert.AreEqual(JsonValueKind.Object, document.RootElement.ValueKind);
     }
@@ -164,12 +158,8 @@ public sealed class RuntimeContractGuardTests
     {
         RuntimeSnapshot[] snapshots =
         [
-            new CognitiveContextSnapshot("context-1", RuntimeContractVersions.Initial, "hash-context", "runtime", DateTimeOffset.UnixEpoch, "cycle-1", "interaction-1", ["memory-1"], ["goal-1"], new Dictionary<string, decimal> { ["attention"] = 0.75m }),
-            new ProjectionInputSnapshot("projection-1", RuntimeContractVersions.Initial, "hash-projection", "runtime", DateTimeOffset.UnixEpoch, "digest", ["node-1"], ["relation-1"], new Dictionary<string, string> { ["source"] = "runtime" }),
-            new TopologySubgraphSnapshot("topology-1", RuntimeContractVersions.Initial, "hash-topology", "runtime", DateTimeOffset.UnixEpoch, [new TopologyNodeRef("node-1", "object", "node", 0, false)], [new TopologyEdgeRef("edge-1", "node-1", "node-2", "association")]),
-            new WaveRuntimeSnapshot("wave-1", RuntimeContractVersions.Initial, "hash-wave", "runtime", DateTimeOffset.UnixEpoch, ["node-1"], 3, 1.0m, new Dictionary<string, decimal> { ["decay"] = 0.1m }),
-            new LearningEvidenceSnapshot("evidence-1", RuntimeContractVersions.Initial, "hash-evidence", "runtime", DateTimeOffset.UnixEpoch, [new LearningEvidenceRef("ev-1", "hebbian_event", "support", 0.8m, 0.9m)], 0.6m, 3),
-            new RuntimeBiasSnapshot("bias-1", RuntimeContractVersions.Initial, "hash-bias", "runtime", DateTimeOffset.UnixEpoch, new Dictionary<string, decimal> { ["fatigue"] = 0.1m }, ["fatigue_bias"])
+            new RuntimeContextSnapshot("context-1", RuntimeContractVersions.Initial, "hash-context", "runtime", DateTimeOffset.UnixEpoch, "context-1", ["ref-1"], new Dictionary<string, string> { ["scope"] = "public" }),
+            new RuntimeInputSnapshot("input-1", RuntimeContractVersions.Initial, "hash-input", "runtime", DateTimeOffset.UnixEpoch, "digest", ["ref-1"], new Dictionary<string, string> { ["source"] = "runtime" })
         ];
 
         foreach (var snapshot in snapshots)
@@ -187,15 +177,12 @@ public sealed class RuntimeContractGuardTests
     {
         EngineDecision[] decisions =
         [
-            new ProjectionDecision(RuntimeContractIdentity.Unspecified, "decision-projection", "hash-1", ["projection"], 0.8m, new RuntimeGovernanceFlags(), ["node-1"], ["relation-1"]),
-            new WavePropagationDecision(RuntimeContractIdentity.Unspecified, "decision-wave", "hash-1", ["wave"], 0.7m, new RuntimeGovernanceFlags(), ["node-1"], ["edge-1"], "completed"),
-            new RuntimeBiasDecision(RuntimeContractIdentity.Unspecified, "decision-bias", "hash-1", ["bias"], 0.6m, new RuntimeGovernanceFlags(), new Dictionary<string, decimal> { ["fatigue"] = 0.1m })
+            new RuntimeDecision(RuntimeContractIdentity.Unspecified, "decision-1", "hash-1", ["explanation-ref-1"], new RuntimeGovernanceFlags(), ["output-ref-1"], new Dictionary<string, string> { ["scope"] = "public" })
         ];
 
         EngineProposal[] proposals =
         [
-            new SynapseAdjustmentProposal(RuntimeContractIdentity.Unspecified, "proposal-synapse", "hash-1", ["synapse"], 0.7m, new RuntimeGovernanceFlags(), "node-1", "node-2", 0.1m),
-            new LearningHypothesisProposal(RuntimeContractIdentity.Unspecified, "proposal-learning", "hash-1", ["learning"], 0.65m, new RuntimeGovernanceFlags(), "provisional_synapse", "collect_more_evidence", ["evidence-1"])
+            new RuntimeProposal(RuntimeContractIdentity.Unspecified, "proposal-1", "hash-1", ["explanation-ref-1"], new RuntimeGovernanceFlags(), ["proposal-ref-1"], new Dictionary<string, string> { ["scope"] = "public" })
         ];
 
         foreach (var decision in decisions)
@@ -217,29 +204,40 @@ public sealed class RuntimeContractGuardTests
         var capability = CreateCapability();
 
         var unsupportedContract = RuntimeCompatibility.Evaluate(
-            capability,
-            RuntimeContractKind.WaveDynamics,
+            new EngineCapability(
+                capability.EngineId,
+                capability.EngineName,
+                capability.EngineVersion,
+                capability.ContractVersion,
+                [],
+                capability.SupportedSnapshotVersions,
+                capability.SupportedDecisionVersions,
+                capability.MaxExecutionTime,
+                capability.FallbackRequired,
+                capability.DeterminismLevel,
+                capability.TraceDisclosureLevel),
+            RuntimeContractKind.RuntimeDecision,
             RuntimeContractVersions.Initial,
             RuntimeContractVersions.Initial,
             TimeSpan.FromSeconds(5));
 
         var unsupportedSnapshot = RuntimeCompatibility.Evaluate(
             capability,
-            RuntimeContractKind.ProjectionDecision,
+            RuntimeContractKind.RuntimeDecision,
             "snapshot/2.0",
             RuntimeContractVersions.Initial,
             TimeSpan.FromSeconds(5));
 
         var unsupportedDecision = RuntimeCompatibility.Evaluate(
             capability,
-            RuntimeContractKind.ProjectionDecision,
+            RuntimeContractKind.RuntimeDecision,
             RuntimeContractVersions.Initial,
             "decision/2.0",
             TimeSpan.FromSeconds(5));
 
         var timeout = RuntimeCompatibility.Evaluate(
             capability,
-            RuntimeContractKind.ProjectionDecision,
+            RuntimeContractKind.RuntimeDecision,
             RuntimeContractVersions.Initial,
             RuntimeContractVersions.Initial,
             TimeSpan.FromMilliseconds(1));
@@ -260,7 +258,6 @@ public sealed class RuntimeContractGuardTests
             "hash-1",
             "decision-1",
             ["private_parameters"],
-            0.7m,
             new RuntimeGovernanceFlags(),
             new GovernanceResult(GovernanceResultKind.Pending, ["review"], false, false, DateTimeOffset.UnixEpoch),
             false,
@@ -299,10 +296,10 @@ public sealed class RuntimeContractGuardTests
     {
         return new EngineCapability(
             "engine-1",
-            "Projection Engine",
+            "Runtime Engine",
             "1.0.0",
             RuntimeContractVersions.Initial,
-            [RuntimeContractKind.ProjectionDecision],
+            [RuntimeContractKind.RuntimeDecision],
             [RuntimeContractVersions.Initial],
             [RuntimeContractVersions.Initial],
             TimeSpan.FromSeconds(2),
