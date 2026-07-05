@@ -1,16 +1,41 @@
-namespace AirMeta.SelfWeave.Runtime.Contracts;
+﻿namespace AirMeta.SelfWeave.Runtime.Contracts;
 
 /// <summary>
-/// 表示运行时传递给引擎的输入快照；Represents a runtime input snapshot passed to an engine.
+/// <para>zh-cn: 表示运行时传递给引擎的输入快照。</para>
+/// <para>en-us: Represents a runtime input snapshot passed to an engine.</para>
 /// </summary>
-/// <param name="SnapshotId">快照唯一标识；The unique snapshot identifier.</param>
-/// <param name="SnapshotVersion">快照契约版本；The snapshot contract version.</param>
-/// <param name="SnapshotHash">快照内容哈希；The snapshot content hash.</param>
-/// <param name="Provenance">快照来源说明；The snapshot provenance.</param>
-/// <param name="CreatedAt">快照创建时间；The snapshot creation time.</param>
-/// <param name="InputDigest">输入摘要；The input digest.</param>
-/// <param name="ReferenceIds">公开引用标识集合；The public reference identifiers.</param>
-/// <param name="Metadata">公开输入元数据；The public input metadata.</param>
+/// <param name="SnapshotId">
+/// <para>zh-cn: 快照唯一标识。</para>
+/// <para>en-us: The unique snapshot identifier.</para>
+/// </param>
+/// <param name="SnapshotVersion">
+/// <para>zh-cn: 快照契约版本。</para>
+/// <para>en-us: The snapshot contract version.</para>
+/// </param>
+/// <param name="SnapshotHash">
+/// <para>zh-cn: 快照内容哈希。</para>
+/// <para>en-us: The snapshot content hash.</para>
+/// </param>
+/// <param name="Provenance">
+/// <para>zh-cn: 快照来源说明。</para>
+/// <para>en-us: The snapshot provenance.</para>
+/// </param>
+/// <param name="CreatedAt">
+/// <para>zh-cn: 快照创建时间。</para>
+/// <para>en-us: The snapshot creation time.</para>
+/// </param>
+/// <param name="InputDigest">
+/// <para>zh-cn: 输入摘要 参数。</para>
+/// <para>en-us: The input digest parameter.</para>
+/// </param>
+/// <param name="ReferenceIds">
+/// <para>zh-cn: ReferenceIds 参数。</para>
+/// <para>en-us: The reference ids parameter.</para>
+/// </param>
+/// <param name="Metadata">
+/// <para>zh-cn: 公开元数据。</para>
+/// <para>en-us: The public metadata.</para>
+/// </param>
 public sealed record RuntimeInputSnapshot(
     string SnapshotId,
     string SnapshotVersion,

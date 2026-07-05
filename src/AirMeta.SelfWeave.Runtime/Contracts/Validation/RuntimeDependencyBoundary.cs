@@ -1,11 +1,21 @@
 ﻿namespace AirMeta.SelfWeave.Runtime.Contracts;
 
 /// <summary>
-/// 描述运行时契约类库允许和禁止的依赖边界；Describes allowed and forbidden dependency boundaries for the runtime contract library.
+/// <para>zh-cn: 描述运行时契约类库允许和禁止的依赖边界。</para>
+/// <para>en-us: Describes allowed and forbidden dependency boundaries for the runtime contract library.</para>
 /// </summary>
-/// <param name="AllowedAssemblyNamePrefixes">允许的程序集名称前缀；Allowed assembly name prefixes.</param>
-/// <param name="ForbiddenAssemblyNamePrefixes">禁止的程序集名称前缀；Forbidden assembly name prefixes.</param>
-/// <param name="ForbiddenNamespacePrefixes">禁止的命名空间前缀；Forbidden namespace prefixes.</param>
+/// <param name="AllowedAssemblyNamePrefixes">
+/// <para>zh-cn: 允许程序集名称前缀集合 参数。</para>
+/// <para>en-us: The allowed assembly name prefixes parameter.</para>
+/// </param>
+/// <param name="ForbiddenAssemblyNamePrefixes">
+/// <para>zh-cn: 禁止程序集名称前缀集合 参数。</para>
+/// <para>en-us: The forbidden assembly name prefixes parameter.</para>
+/// </param>
+/// <param name="ForbiddenNamespacePrefixes">
+/// <para>zh-cn: 禁止命名空间前缀集合 参数。</para>
+/// <para>en-us: The forbidden namespace prefixes parameter.</para>
+/// </param>
 public sealed record RuntimeDependencyBoundary(
     IReadOnlyList<string> AllowedAssemblyNamePrefixes,
     IReadOnlyList<string> ForbiddenAssemblyNamePrefixes,

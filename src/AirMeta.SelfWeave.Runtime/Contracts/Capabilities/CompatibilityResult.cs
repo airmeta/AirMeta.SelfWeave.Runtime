@@ -1,13 +1,29 @@
 ﻿namespace AirMeta.SelfWeave.Runtime.Contracts;
 
 /// <summary>
-/// 表示运行时对引擎能力匹配结果的判断；Represents the runtime compatibility decision for an engine capability.
+/// <para>zh-cn: 表示运行时对引擎能力匹配结果的判断。</para>
+/// <para>en-us: Represents the runtime compatibility decision for an engine capability.</para>
 /// </summary>
-/// <param name="Status">兼容性状态；The compatibility status.</param>
-/// <param name="ReasonCode">机器可读原因码；The machine-readable reason code.</param>
-/// <param name="Compatible">是否可直接使用；Whether the engine is directly compatible.</param>
-/// <param name="FallbackRequired">是否需要降级路径；Whether a fallback path is required.</param>
-/// <param name="TimeoutRequired">是否因超时边界不满足而失败；Whether the check failed because of timeout requirements.</param>
+/// <param name="Status">
+/// <para>zh-cn: 状态 参数。</para>
+/// <para>en-us: The status parameter.</para>
+/// </param>
+/// <param name="ReasonCode">
+/// <para>zh-cn: 原因代码 参数。</para>
+/// <para>en-us: The reason code parameter.</para>
+/// </param>
+/// <param name="Compatible">
+/// <para>zh-cn: 兼容 参数。</para>
+/// <para>en-us: The compatible parameter.</para>
+/// </param>
+/// <param name="FallbackRequired">
+/// <para>zh-cn: 降级要求 参数。</para>
+/// <para>en-us: The fallback required parameter.</para>
+/// </param>
+/// <param name="TimeoutRequired">
+/// <para>zh-cn: 超时要求 参数。</para>
+/// <para>en-us: The timeout required parameter.</para>
+/// </param>
 public sealed record CompatibilityResult(
     CompatibilityStatus Status,
     string ReasonCode,

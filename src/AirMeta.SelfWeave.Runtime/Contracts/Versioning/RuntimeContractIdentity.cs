@@ -1,18 +1,29 @@
 ﻿namespace AirMeta.SelfWeave.Runtime.Contracts;
 
 /// <summary>
-/// 标识生成契约输出的引擎和契约版本；Identifies the engine and contract version that produced a contract output.
+/// <para>zh-cn: 标识生成契约输出的引擎和契约版本。</para>
+/// <para>en-us: Identifies the engine and contract version that produced a contract output.</para>
 /// </summary>
-/// <param name="EngineId">引擎唯一标识；The unique engine identifier.</param>
-/// <param name="EngineVersion">引擎版本；The engine version.</param>
-/// <param name="ContractVersion">运行时契约版本；The runtime contract version.</param>
+/// <param name="EngineId">
+/// <para>zh-cn: 引擎标识 参数。</para>
+/// <para>en-us: The engine id parameter.</para>
+/// </param>
+/// <param name="EngineVersion">
+/// <para>zh-cn: 引擎版本 参数。</para>
+/// <para>en-us: The engine version parameter.</para>
+/// </param>
+/// <param name="ContractVersion">
+/// <para>zh-cn: 契约版本 参数。</para>
+/// <para>en-us: The contract version parameter.</para>
+/// </param>
 public sealed record RuntimeContractIdentity(
     string EngineId,
     string EngineVersion,
     string ContractVersion)
 {
     /// <summary>
-    /// 未指定引擎身份时使用的保守占位身份；The conservative placeholder identity used when no engine identity is specified.
+    /// <para>zh-cn: 获取或表示 Unspecified。</para>
+    /// <para>en-us: Gets or represents unspecified.</para>
     /// </summary>
     public static RuntimeContractIdentity Unspecified { get; } =
         new("unspecified", "unspecified", RuntimeContractVersions.Initial);

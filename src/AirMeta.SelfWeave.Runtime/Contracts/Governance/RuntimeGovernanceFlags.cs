@@ -1,19 +1,53 @@
 ﻿namespace AirMeta.SelfWeave.Runtime.Contracts;
 
 /// <summary>
-/// 描述引擎输出必须交由运行时治理处理的控制标记；Describes governance control flags that runtime must enforce for engine output.
+/// <para>zh-cn: 描述引擎输出必须交由运行时治理处理的控制标记。</para>
+/// <para>en-us: Describes governance control flags that runtime must enforce for engine output.</para>
 /// </summary>
-/// <param name="RequiresGovernanceReview">是否需要治理审核；Whether governance review is required.</param>
-/// <param name="RequiresManualConfirmation">是否需要人工确认；Whether manual confirmation is required.</param>
-/// <param name="RequiresPromoteGuard">是否需要提升保护校验；Whether promote-guard validation is required.</param>
-/// <param name="RequiresStateGuard">是否需要状态保护校验；Whether state-guard validation is required.</param>
-/// <param name="PromotesStableNeuron">是否建议提升稳定神经元；Whether stable neuron promotion is proposed.</param>
-/// <param name="PromotesStableSynapse">是否建议提升稳定突触；Whether stable synapse promotion is proposed.</param>
-/// <param name="AffectsStableState">是否影响稳定状态；Whether stable state may be affected.</param>
-/// <param name="AffectsLongTermState">是否影响长期状态；Whether long-term state may be affected.</param>
-/// <param name="AffectsHighRiskAction">是否影响高风险动作；Whether high-risk actions may be affected.</param>
-/// <param name="TraceRequired">是否必须记录追踪；Whether trace recording is required.</param>
-/// <param name="FallbackSafe">是否可安全降级；Whether fallback is safe.</param>
+/// <param name="RequiresGovernanceReview">
+/// <para>zh-cn: 要求治理Review 参数。</para>
+/// <para>en-us: The requires governance review parameter.</para>
+/// </param>
+/// <param name="RequiresManualConfirmation">
+/// <para>zh-cn: 要求人工确认 参数。</para>
+/// <para>en-us: The requires manual confirmation parameter.</para>
+/// </param>
+/// <param name="RequiresPromoteGuard">
+/// <para>zh-cn: 要求提升保护 参数。</para>
+/// <para>en-us: The requires promote guard parameter.</para>
+/// </param>
+/// <param name="RequiresStateGuard">
+/// <para>zh-cn: 要求状态保护 参数。</para>
+/// <para>en-us: The requires state guard parameter.</para>
+/// </param>
+/// <param name="PromotesStableNeuron">
+/// <para>zh-cn: 提升稳定神经元 参数。</para>
+/// <para>en-us: The promotes stable neuron parameter.</para>
+/// </param>
+/// <param name="PromotesStableSynapse">
+/// <para>zh-cn: 提升稳定Synapse 参数。</para>
+/// <para>en-us: The promotes stable synapse parameter.</para>
+/// </param>
+/// <param name="AffectsStableState">
+/// <para>zh-cn: 影响稳定状态 参数。</para>
+/// <para>en-us: The affects stable state parameter.</para>
+/// </param>
+/// <param name="AffectsLongTermState">
+/// <para>zh-cn: 影响长期Term状态 参数。</para>
+/// <para>en-us: The affects long term state parameter.</para>
+/// </param>
+/// <param name="AffectsHighRiskAction">
+/// <para>zh-cn: 影响高风险动作 参数。</para>
+/// <para>en-us: The affects high risk action parameter.</para>
+/// </param>
+/// <param name="TraceRequired">
+/// <para>zh-cn: 追踪要求 参数。</para>
+/// <para>en-us: The trace required parameter.</para>
+/// </param>
+/// <param name="FallbackSafe">
+/// <para>zh-cn: 降级安全 参数。</para>
+/// <para>en-us: The fallback safe parameter.</para>
+/// </param>
 public sealed record RuntimeGovernanceFlags(
     bool RequiresGovernanceReview = true,
     bool RequiresManualConfirmation = false,

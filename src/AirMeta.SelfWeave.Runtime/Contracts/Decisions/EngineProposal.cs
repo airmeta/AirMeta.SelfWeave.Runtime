@@ -1,13 +1,29 @@
 ﻿namespace AirMeta.SelfWeave.Runtime.Contracts;
 
 /// <summary>
-/// 表示引擎提出但必须由运行时治理处理的建议基类；Represents the base proposal emitted by an engine and governed by the runtime.
+/// <para>zh-cn: 表示引擎提出但必须由运行时治理处理的建议基类。</para>
+/// <para>en-us: Represents the base proposal emitted by an engine and governed by the runtime.</para>
 /// </summary>
-/// <param name="Identity">生成建议的引擎和契约身份；The engine and contract identity that produced the proposal.</param>
-/// <param name="ProposalId">建议唯一标识；The unique proposal identifier.</param>
-/// <param name="InputSnapshotHash">输入快照哈希；The hash of the input snapshot.</param>
-/// <param name="ExplanationRefs">解释引用集合；The explanation references for the proposal.</param>
-/// <param name="GovernanceFlags">运行时治理标记；Runtime governance flags.</param>
+/// <param name="Identity">
+/// <para>zh-cn: 生成输出的引擎和契约身份。</para>
+/// <para>en-us: The engine and contract identity that produced the output.</para>
+/// </param>
+/// <param name="ProposalId">
+/// <para>zh-cn: 建议唯一标识。</para>
+/// <para>en-us: The unique proposal identifier.</para>
+/// </param>
+/// <param name="InputSnapshotHash">
+/// <para>zh-cn: 输入快照哈希。</para>
+/// <para>en-us: The hash of the input snapshot.</para>
+/// </param>
+/// <param name="ExplanationRefs">
+/// <para>zh-cn: 解释引用集合。</para>
+/// <para>en-us: The explanation references.</para>
+/// </param>
+/// <param name="GovernanceFlags">
+/// <para>zh-cn: 运行时治理标记。</para>
+/// <para>en-us: Runtime governance flags.</para>
+/// </param>
 public abstract record EngineProposal(
     RuntimeContractIdentity Identity,
     string ProposalId,

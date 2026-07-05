@@ -1,13 +1,29 @@
 ﻿namespace AirMeta.SelfWeave.Runtime.Contracts;
 
 /// <summary>
-/// 表示运行时和引擎插件之间的握手结果；Represents the handshake result between the runtime and an engine plugin.
+/// <para>zh-cn: 表示运行时和引擎插件之间的握手结果。</para>
+/// <para>en-us: Represents the handshake result between the runtime and an engine plugin.</para>
 /// </summary>
-/// <param name="Manifest">插件清单；The plugin manifest.</param>
-/// <param name="Compatibility">兼容性评估结果；The compatibility evaluation result.</param>
-/// <param name="ActualEngineIdentity">插件实际返回的引擎身份；The actual engine identity returned by the plugin.</param>
-/// <param name="TraceIdentityRequired">是否要求追踪中保留真实身份；Whether trace records must keep the actual identity.</param>
-/// <param name="MayReplaceRuntimeGovernance">插件是否声称可替代运行时治理；Whether the plugin claims it may replace runtime governance.</param>
+/// <param name="Manifest">
+/// <para>zh-cn: 清单 参数。</para>
+/// <para>en-us: The manifest parameter.</para>
+/// </param>
+/// <param name="Compatibility">
+/// <para>zh-cn: Compatibility 参数。</para>
+/// <para>en-us: The compatibility parameter.</para>
+/// </param>
+/// <param name="ActualEngineIdentity">
+/// <para>zh-cn: 实际引擎身份 参数。</para>
+/// <para>en-us: The actual engine identity parameter.</para>
+/// </param>
+/// <param name="TraceIdentityRequired">
+/// <para>zh-cn: 追踪身份要求 参数。</para>
+/// <para>en-us: The trace identity required parameter.</para>
+/// </param>
+/// <param name="MayReplaceRuntimeGovernance">
+/// <para>zh-cn: 可以替代运行时治理 参数。</para>
+/// <para>en-us: The may replace runtime governance parameter.</para>
+/// </param>
 public sealed record EnginePluginHandshake(
     EnginePluginManifest Manifest,
     CompatibilityResult Compatibility,

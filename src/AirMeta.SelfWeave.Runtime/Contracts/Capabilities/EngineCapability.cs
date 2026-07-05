@@ -1,19 +1,53 @@
 ﻿namespace AirMeta.SelfWeave.Runtime.Contracts;
 
 /// <summary>
-/// 描述引擎可提供的契约能力、版本和运行边界；Describes the contract capability, versions, and runtime limits exposed by an engine.
+/// <para>zh-cn: 描述引擎可提供的契约能力、版本和运行边界。</para>
+/// <para>en-us: Describes the contract capability, versions, and runtime limits exposed by an engine.</para>
 /// </summary>
-/// <param name="EngineId">引擎唯一标识；The unique engine identifier.</param>
-/// <param name="EngineName">引擎显示名称；The human-readable engine name.</param>
-/// <param name="EngineVersion">引擎实现版本；The engine implementation version.</param>
-/// <param name="ContractVersion">引擎遵循的运行时契约版本；The runtime contract version implemented by the engine.</param>
-/// <param name="SupportedContracts">引擎支持的契约类型集合；The contract kinds supported by the engine.</param>
-/// <param name="SupportedSnapshotVersions">引擎可读取的快照版本集合；The snapshot versions the engine can read.</param>
-/// <param name="SupportedDecisionVersions">引擎可输出的决策版本集合；The decision versions the engine can emit.</param>
-/// <param name="MaxExecutionTime">引擎声明的最长执行时间；The maximum execution time declared by the engine.</param>
-/// <param name="FallbackRequired">是否要求运行时准备降级路径；Whether the runtime must prepare a fallback path.</param>
-/// <param name="DeterminismLevel">引擎输出的确定性等级；The determinism level of engine output.</param>
-/// <param name="TraceDisclosureLevel">引擎允许公开的追踪披露等级；The trace disclosure level allowed by the engine.</param>
+/// <param name="EngineId">
+/// <para>zh-cn: 引擎标识 参数。</para>
+/// <para>en-us: The engine id parameter.</para>
+/// </param>
+/// <param name="EngineName">
+/// <para>zh-cn: 引擎名称 参数。</para>
+/// <para>en-us: The engine name parameter.</para>
+/// </param>
+/// <param name="EngineVersion">
+/// <para>zh-cn: 引擎版本 参数。</para>
+/// <para>en-us: The engine version parameter.</para>
+/// </param>
+/// <param name="ContractVersion">
+/// <para>zh-cn: 契约版本 参数。</para>
+/// <para>en-us: The contract version parameter.</para>
+/// </param>
+/// <param name="SupportedContracts">
+/// <para>zh-cn: 支持Contracts 参数。</para>
+/// <para>en-us: The supported contracts parameter.</para>
+/// </param>
+/// <param name="SupportedSnapshotVersions">
+/// <para>zh-cn: 支持快照Versions 参数。</para>
+/// <para>en-us: The supported snapshot versions parameter.</para>
+/// </param>
+/// <param name="SupportedDecisionVersions">
+/// <para>zh-cn: 支持DecisionVersions 参数。</para>
+/// <para>en-us: The supported decision versions parameter.</para>
+/// </param>
+/// <param name="MaxExecutionTime">
+/// <para>zh-cn: 最大执行时间 参数。</para>
+/// <para>en-us: The max execution time parameter.</para>
+/// </param>
+/// <param name="FallbackRequired">
+/// <para>zh-cn: 降级要求 参数。</para>
+/// <para>en-us: The fallback required parameter.</para>
+/// </param>
+/// <param name="DeterminismLevel">
+/// <para>zh-cn: 确定性等级 参数。</para>
+/// <para>en-us: The determinism level parameter.</para>
+/// </param>
+/// <param name="TraceDisclosureLevel">
+/// <para>zh-cn: 追踪披露等级 参数。</para>
+/// <para>en-us: The trace disclosure level parameter.</para>
+/// </param>
 public sealed record EngineCapability(
     string EngineId,
     string EngineName,

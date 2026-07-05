@@ -1,15 +1,37 @@
 ﻿namespace AirMeta.SelfWeave.Runtime.Contracts;
 
 /// <summary>
-/// 描述可由运行时加载或调用的引擎插件清单；Describes an engine plugin manifest loadable or callable by the runtime.
+/// <para>zh-cn: 描述可由运行时加载或调用的引擎插件清单。</para>
+/// <para>en-us: Describes an engine plugin manifest loadable or callable by the runtime.</para>
 /// </summary>
-/// <param name="PluginId">插件唯一标识；The unique plugin identifier.</param>
-/// <param name="PluginName">插件显示名称；The human-readable plugin name.</param>
-/// <param name="PluginVersion">插件版本；The plugin version.</param>
-/// <param name="EntryPoint">插件入口点；The plugin entry point.</param>
-/// <param name="IsolationLevel">插件隔离等级；The plugin isolation level.</param>
-/// <param name="ExecutionTimeout">插件执行超时时间；The plugin execution timeout.</param>
-/// <param name="Capability">插件暴露的引擎能力；The engine capability exposed by the plugin.</param>
+/// <param name="PluginId">
+/// <para>zh-cn: 插件标识 参数。</para>
+/// <para>en-us: The plugin id parameter.</para>
+/// </param>
+/// <param name="PluginName">
+/// <para>zh-cn: 插件名称 参数。</para>
+/// <para>en-us: The plugin name parameter.</para>
+/// </param>
+/// <param name="PluginVersion">
+/// <para>zh-cn: 插件版本 参数。</para>
+/// <para>en-us: The plugin version parameter.</para>
+/// </param>
+/// <param name="EntryPoint">
+/// <para>zh-cn: 入口点 参数。</para>
+/// <para>en-us: The entry point parameter.</para>
+/// </param>
+/// <param name="IsolationLevel">
+/// <para>zh-cn: 隔离等级 参数。</para>
+/// <para>en-us: The isolation level parameter.</para>
+/// </param>
+/// <param name="ExecutionTimeout">
+/// <para>zh-cn: 执行超时 参数。</para>
+/// <para>en-us: The execution timeout parameter.</para>
+/// </param>
+/// <param name="Capability">
+/// <para>zh-cn: 待评估的引擎能力声明。</para>
+/// <para>en-us: The engine capability declaration to evaluate.</para>
+/// </param>
 public sealed record EnginePluginManifest(
     string PluginId,
     string PluginName,

@@ -1,15 +1,37 @@
-namespace AirMeta.SelfWeave.Runtime.Contracts;
+﻿namespace AirMeta.SelfWeave.Runtime.Contracts;
 
 /// <summary>
-/// 表示引擎返回给运行时的受控决策；Represents a bounded decision returned from an engine to the runtime.
+/// <para>zh-cn: 运行时决策契约。</para>
+/// <para>en-us: Runtime decision contract.</para>
 /// </summary>
-/// <param name="Identity">生成决策的引擎和契约身份；The engine and contract identity that produced the decision.</param>
-/// <param name="DecisionId">决策唯一标识；The unique decision identifier.</param>
-/// <param name="InputSnapshotHash">输入快照哈希；The hash of the input snapshot.</param>
-/// <param name="ExplanationRefs">解释引用集合；The explanation references.</param>
-/// <param name="GovernanceFlags">运行时治理标记；Runtime governance flags.</param>
-/// <param name="OutputRefs">输出引用集合；The output references.</param>
-/// <param name="Metadata">公开输出元数据；The public output metadata.</param>
+/// <param name="Identity">
+/// <para>zh-cn: 生成输出的引擎和契约身份。</para>
+/// <para>en-us: The engine and contract identity that produced the output.</para>
+/// </param>
+/// <param name="DecisionId">
+/// <para>zh-cn: 决策唯一标识。</para>
+/// <para>en-us: The unique decision identifier.</para>
+/// </param>
+/// <param name="InputSnapshotHash">
+/// <para>zh-cn: 输入快照哈希。</para>
+/// <para>en-us: The hash of the input snapshot.</para>
+/// </param>
+/// <param name="ExplanationRefs">
+/// <para>zh-cn: 解释引用集合。</para>
+/// <para>en-us: The explanation references.</para>
+/// </param>
+/// <param name="GovernanceFlags">
+/// <para>zh-cn: 运行时治理标记。</para>
+/// <para>en-us: Runtime governance flags.</para>
+/// </param>
+/// <param name="OutputRefs">
+/// <para>zh-cn: 输出引用集合 参数。</para>
+/// <para>en-us: The output refs parameter.</para>
+/// </param>
+/// <param name="Metadata">
+/// <para>zh-cn: 公开元数据。</para>
+/// <para>en-us: The public metadata.</para>
+/// </param>
 public sealed record RuntimeDecision(
     RuntimeContractIdentity Identity,
     string DecisionId,

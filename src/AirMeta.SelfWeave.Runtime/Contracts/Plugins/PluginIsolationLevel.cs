@@ -1,14 +1,24 @@
 ﻿namespace AirMeta.SelfWeave.Runtime.Contracts;
 
 /// <summary>
-/// 表示插件运行隔离等级；Represents plugin execution isolation levels.
+/// <para>zh-cn: 表示插件运行隔离等级。</para>
+/// <para>en-us: Represents plugin execution isolation levels.</para>
 /// </summary>
 public enum PluginIsolationLevel
 {
-    /// <summary>进程内适配器；In-process adapter.</summary>
+    /// <summary>
+    /// <para>zh-cn: 进程内适配器。</para>
+    /// <para>en-us: In-process adapter.</para>
+    /// </summary>
     InProcessAdapter,
-    /// <summary>进程外适配器；Out-of-process adapter.</summary>
+    /// <summary>
+    /// <para>zh-cn: 进程外适配器。</para>
+    /// <para>en-us: Out-of-process adapter.</para>
+    /// </summary>
     OutOfProcessAdapter,
-    /// <summary>远程适配器；Remote adapter.</summary>
+    /// <summary>
+    /// <para>zh-cn: 远程适配器。</para>
+    /// <para>en-us: Remote adapter.</para>
+    /// </summary>
     RemoteAdapter
 }
